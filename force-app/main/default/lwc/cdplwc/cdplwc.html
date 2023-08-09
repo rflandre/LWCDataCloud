@@ -1,0 +1,74 @@
+<template>
+
+   <div class="acc-container">
+      <lightning-record-view-form record-id={recordId} object-api-name="Account">
+          <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2">
+                  <lightning-output-field field-name="Name"></lightning-output-field>
+                  <lightning-output-field field-name="Website"></lightning-output-field>
+              </div>
+              <div class="slds-col slds-size_1-of-2">
+                  <lightning-output-field field-name="goldenID__c"></lightning-output-field>
+                  <lightning-output-field field-name="AnnualRevenue"></lightning-output-field>
+              </div>
+          </div>
+      </lightning-record-view-form>
+  </div>
+
+
+    <lightning-card title="Request Data Cloud for Unify View" >
+       <div style='width:200px;'>
+          <lightning-input class="GoldenId" label="Enter Data Cloud Golden Id : " placeholder="Enter valid DC Golden Id (1, 2 or 3, ...)" value={GoldenIdValue}></lightning-input>
+       </div>
+       <lightning-button label="Submit" onclick={handleBtnClick} ></lightning-button>
+       <div if:true={isLoaded} class="slds-is-relative">
+          <lightning-spinner
+             alternative-text="Loading…" variant="brand"></lightning-spinner>
+       </div>
+       <template if:true={noGoldenIdFound}>
+          <div class="slds-notify slds-notify_alert" role="alert">No Data Available</div>
+       </template>
+       <template if:true={showSummaryDetail}>
+          <table class="myTable">
+             <tbody>
+               <template if:true={parsedValue.data}>
+                  <template for:each={parsedValue.data} for:item="opp">
+                <tr key={opp.ssot__Id__c}>
+                   <td><b>ssot__Id__c </b></td>
+                   <td>{opp.ssot__Id__c}</td>
+                </tr>
+                <tr key={opp.ssot__Name__c}>
+                   <td><b>ssot__Name__c </b></td>
+                   <td>{opp.ssot__Name__c}</td>
+                </tr>
+                <tr key={opp.ssot__Number__c}>
+                   <td><b>ssot__Number__c </b> </td>
+                   <td>{opp.ssot__Number__c}</td>
+                </tr>
+                <tr key={opp.ssot__Description__c}>
+                   <td><b>ssot__Description__c </b></td>
+                   <td>{opp.ssot__Description__c}</td>
+                </tr>
+                <tr key={opp.ssot__ExpectedRevenueAmount__c}>
+                  <td><b>ssot__ExpectedRevenueAmount__c </b></td>
+                  <td>{opp.ssot__ExpectedRevenueAmount__c}</td>
+               </tr>
+               <tr key={opp.ssot__OpportunityStage__c}>
+                  <td><b>ssot__OpportunityStage__c </b></td>
+                  <td>{opp.ssot__OpportunityStage__c}</td>
+               </tr>
+               <tr key={opp.ssot__TotalAmount__c} class="border-bottom">
+                  <td><b>ssot__TotalAmount__c </b></td>
+                  <td>{opp.ssot__TotalAmount__c}</td>
+               </tr>
+               </template>
+            </template>
+             </tbody>
+          </table>
+
+
+
+       </template>
+    </lightning-card>
+ </template>
+ 
